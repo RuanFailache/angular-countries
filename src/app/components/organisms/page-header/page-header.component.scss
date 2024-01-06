@@ -1,0 +1,55 @@
+.container {
+  width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+  padding: 30px 16px;
+
+  &.dark {
+    background-color: #2B3844;
+  }
+
+  &.light {
+    background-color: #FFFFFF;
+  }
+
+  @media (min-width: 969px) {
+    padding: 30px 80px;
+    margin: 0 auto;
+  }
+}
+
+.title {
+	font-size: 14px;
+	font-weight: 800;
+
+	@media (min-width: 969px) {
+		font-size: 24px;
+	}
+}
+
+.button {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	background-color: transparent;
+  cursor: pointer;
+
+	mat-icon {
+    height: fit-content;
+    font-size: 16px;
+
+    @media (min-width: 969px) {
+      font-size: 20px;
+    }
+	}
+
+	span {
+		font-size: 12px;
+		font-weight: 600;
+
+		@media (min-width: 969px) {
+			font-size: 16px;
+		}
+	}
+}
