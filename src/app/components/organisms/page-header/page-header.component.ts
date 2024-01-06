@@ -6,6 +6,7 @@ import {
 	ThemeType,
 } from "../../../services/theme/theme.service";
 import { NgClass } from "@angular/common";
+import { Nullable } from "../../../utils/type.utils";
 
 @Component({
 	selector: "app-page-header",
@@ -15,11 +16,7 @@ import { NgClass } from "@angular/common";
 	styleUrl: "./page-header.component.scss",
 })
 export class PageHeaderComponent implements OnInit {
-	theme: ThemeType = Theme.LIGHT;
-
-	themeMode: string = this.theme === Theme.DARK ? "Dark Mode" : "Light Mode";
-
-	themeIcon: string = this.theme === Theme.DARK ? "dark_mode" : "light_mode";
+	theme: Nullable<ThemeType>;
 
 	constructor(private themeService: ThemeService) {}
 
@@ -29,9 +26,15 @@ export class PageHeaderComponent implements OnInit {
 		});
 	}
 
+	get buttonText(): string {
+		return this.theme === Theme.DARK ? "Dark Mode" : "Light Mode";
+	}
+
+	get icon(): string {
+		return this.theme === Theme.DARK ? "dark_mode" : "light_mode";
+	}
+
 	onToggleTheme() {
 		this.themeService.toggleTheme();
 	}
-
-	protected readonly Theme = Theme;
 }

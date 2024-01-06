@@ -1,16 +1,31 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { ThemeService } from './theme.service';
+import { Theme, ThemeService, ThemeType } from "./theme.service";
+import { Nullable } from "../../utils/type.utils";
 
-describe('ThemeService', () => {
-  let service: ThemeService;
+describe("ThemeService", () => {
+	let service: ThemeService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(ThemeService);
-  });
+	beforeEach(() => {
+		TestBed.configureTestingModule({});
+		service = TestBed.inject(ThemeService);
+	});
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+	it("should init with light mode activated", () => {
+		service.getTheme().subscribe((theme) => {
+			expect(theme).toBe(Theme.LIGHT);
+		});
+	});
+
+	it("should change the mode on toggle correctly", () => {
+		let currentTheme: Nullable<ThemeType>;
+
+		service.getTheme().subscribe((theme) => {
+			currentTheme = theme;
+		});
+
+		service.toggleTheme();
+
+		expect(currentTheme).toBe(Theme.DARK);
+	});
 });
