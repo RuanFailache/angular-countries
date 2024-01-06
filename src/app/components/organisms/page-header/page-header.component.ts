@@ -1,12 +1,9 @@
+import { NgClass } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
-import {
-	Theme,
-	ThemeService,
-	ThemeType,
-} from "../../../services/theme/theme.service";
-import { NgClass } from "@angular/common";
-import { Nullable } from "../../../utils/type.utils";
+
+import { Theme, ThemeService, ThemeType } from "~/services/theme/theme.service";
+import { Nullable } from "~/utils/type.utils";
 
 @Component({
 	selector: "app-page-header",

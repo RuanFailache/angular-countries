@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
-import { ValueOf } from "../../utils/type.utils";
 import { BehaviorSubject, Observable } from "rxjs";
+
+import { ValueOf } from "~/utils/type.utils";
 
 export const Theme = {
 	LIGHT: "light",

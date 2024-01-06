@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
+import { Theme } from "~/services/theme/theme.service";
+
 import { PageHeaderComponent } from "./page-header.component";
-import { Theme } from "../../../services/theme/theme.service";
 
 describe("PageHeaderComponent", () => {
 	let component: PageHeaderComponent;
