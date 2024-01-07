@@ -2,5 +2,6 @@
 	"tabWidth": 4,
 	"trailingComma": "all",
 	"useTabs": true,
-	"singleQuote": false
+	"singleQuote": false,
+	"printWidth": 120
 }

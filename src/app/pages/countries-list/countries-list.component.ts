@@ -5,10 +5,7 @@ import { CountryService } from "~/api/country/country.service";
 import { DropdownButtonComponent } from "~/components/atoms/dropdown-button/dropdown-button.component";
 import { SearchTextFieldComponent } from "~/components/atoms/search-text-field/search-text-field.component";
 import { CountryCardComponent } from "~/components/molecules/country-card/country-card.component";
-import {
-	CountryCardInput,
-	DataCell,
-} from "~/components/molecules/country-card/country-card.types";
+import { CountryCardInput, DataCell } from "~/components/molecules/country-card/country-card.types";
 import { Country } from "~/models/Country";
 
 @Component({
@@ -16,16 +13,14 @@ import { Country } from "~/models/Country";
 	styleUrl: "./countries-list.component.scss",
 	templateUrl: "./countries-list.component.html",
 	standalone: true,
-	imports: [
-		CountryCardComponent,
-		SearchTextFieldComponent,
-		DropdownButtonComponent,
-	],
+	imports: [CountryCardComponent, SearchTextFieldComponent, DropdownButtonComponent],
 })
 export class CountriesListComponent implements OnInit {
 	loading = true;
 	countries: CountryCardInput[] = [];
 	regions: string[] = [];
+	selectedRegion: string = "";
+	searchedCountryName: string = "";
 
 	constructor(
 		private countryService: CountryService,
@@ -51,12 +46,29 @@ export class CountriesListComponent implements OnInit {
 		});
 	}
 
+	get filteredCountries(): CountryCardInput[] {
+		return this.countries.filter((country) => {
+			const countryName = country.title.toLowerCase();
+			const searchedCountryName = this.searchedCountryName.toLowerCase();
+			const isNameSearched = countryName.includes(searchedCountryName);
+
+			const region = country.data.find((d) => d.label === "Region");
+			const isRegionSelected = !this.selectedRegion || region?.value === this.selectedRegion;
+
+			return isNameSearched && isRegionSelected;
+		});
+	}
+
 	onFormatRegion(region: string) {
 		return region;
 	}
 
 	onChangeRegion(region: string) {
-		console.log(region);
+		this.selectedRegion = region;
+	}
+
+	onChangeCountryName(name: string) {
+		this.searchedCountryName = name;
 	}
 
 	private reduceResponseToRegions(countries: Country[]) {

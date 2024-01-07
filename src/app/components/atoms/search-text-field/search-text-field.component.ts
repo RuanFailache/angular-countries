@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
 
 import { ThemeService, ThemeType } from "~/services/theme/theme.service";
@@ -13,6 +13,8 @@ import { ThemeService, ThemeType } from "~/services/theme/theme.service";
 export class SearchTextFieldComponent implements OnInit {
 	@Input() placeholder: string = "";
 
+	@Output() search = new EventEmitter<string>();
+
 	theme: ThemeType;
 
 	constructor(private themeService: ThemeService) {}
@@ -21,5 +23,10 @@ export class SearchTextFieldComponent implements OnInit {
 		this.themeService.getTheme().subscribe((currentTheme) => {
 			this.theme = currentTheme;
 		});
+	}
+
+	onSearch(target: EventTarget | null) {
+		const { value } = target as HTMLInputElement;
+		this.search.emit(value);
 	}
 }

@@ -15,7 +15,7 @@ export class DropdownButtonComponent<T> implements OnInit {
 	@Input({ required: true }) options: T[];
 	@Input({ required: true }) formatOption: (option: T) => string;
 
-	@Output() changeOption: EventEmitter<T> = new EventEmitter<T>();
+	@Output() changeOption = new EventEmitter<T>();
 
 	theme: ThemeType;
 	selectedOption: T;
@@ -30,9 +30,7 @@ export class DropdownButtonComponent<T> implements OnInit {
 	}
 
 	get selectedOptionText(): string {
-		return this.selectedOption
-			? this.formatOption(this.selectedOption)
-			: this.placeholder;
+		return this.selectedOption ? this.formatOption(this.selectedOption) : this.placeholder;
 	}
 
 	toggleDropdown() {
