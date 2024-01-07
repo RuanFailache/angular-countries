@@ -1,0 +1,77 @@
+.wrapper {
+	position: relative;
+
+	&.light {
+		.selected,
+		.options {
+			background-color: #ffffff;
+		}
+	}
+
+	&.dark {
+		.selected,
+		.options {
+			background-color: #2b3844;
+		}
+	}
+}
+
+.selected,
+.options {
+	width: 200px;
+	border-radius: 5px;
+	overflow: hidden;
+
+	font-size: 12px;
+
+	@media (min-width: 768px) {
+		font-size: 14px;
+	}
+}
+
+.selected {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	padding: 16px 24px;
+
+	cursor: pointer;
+
+	span {
+		font-size: 12px;
+		line-height: 20px;
+
+		@media (min-width: 768px) {
+			font-size: 14px;
+		}
+	}
+
+	mat-icon {
+		width: fit-content;
+		height: fit-content;
+
+		font-size: 10px;
+
+		@media (min-width: 768px) {
+			font-size: 12px;
+		}
+	}
+
+	@media (min-width: 768px) {
+		padding: 18px 24px;
+	}
+}
+
+.options {
+	padding: 8px 0;
+
+	position: absolute;
+	top: calc(100% + 4px);
+	z-index: 1;
+}
+
+.option {
+	padding: 8px 24px;
+	cursor: pointer;
+}

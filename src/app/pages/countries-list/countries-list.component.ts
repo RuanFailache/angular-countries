@@ -2,6 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
 
 import { CountryService } from "~/api/country/country.service";
+import { DropdownButtonComponent } from "~/components/atoms/dropdown-button/dropdown-button.component";
+import { SearchTextFieldComponent } from "~/components/atoms/search-text-field/search-text-field.component";
 import { CountryCardComponent } from "~/components/molecules/country-card/country-card.component";
 import {
 	CountryCardInput,
@@ -11,14 +13,19 @@ import { Country } from "~/models/Country";
 
 @Component({
 	selector: "app-countries-list",
-	standalone: true,
-	imports: [CountryCardComponent],
-	templateUrl: "./countries-list.component.html",
 	styleUrl: "./countries-list.component.scss",
+	templateUrl: "./countries-list.component.html",
+	standalone: true,
+	imports: [
+		CountryCardComponent,
+		SearchTextFieldComponent,
+		DropdownButtonComponent,
+	],
 })
 export class CountriesListComponent implements OnInit {
 	loading = true;
 	countries: CountryCardInput[] = [];
+	regions: string[] = [];
 
 	constructor(
 		private countryService: CountryService,
@@ -28,7 +35,8 @@ export class CountriesListComponent implements OnInit {
 	ngOnInit(): void {
 		this.countryService.getAllCountries().subscribe({
 			next: (countries) => {
-				this.countries = countries.map(this.mapResponse);
+				this.countries = countries.map(this.mapResponseToCountries);
+				this.reduceResponseToRegions(countries);
 			},
 			error: () => {
 				this.snackBar.open("Countries search failed!", "", {
@@ -43,7 +51,24 @@ export class CountriesListComponent implements OnInit {
 		});
 	}
 
-	private mapResponse(country: Country) {
+	onFormatRegion(region: string) {
+		return region;
+	}
+
+	onChangeRegion(region: string) {
+		console.log(region);
+	}
+
+	private reduceResponseToRegions(countries: Country[]) {
+		this.regions = countries.reduce<string[]>((regions, country) => {
+			if (!regions.includes(country.region)) {
+				regions.push(country.region);
+			}
+			return regions;
+		}, []);
+	}
+
+	private mapResponseToCountries(country: Country) {
 		const data: DataCell[] = [];
 
 		if (country.population) {

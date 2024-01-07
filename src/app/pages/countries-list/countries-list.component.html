@@ -1,11 +1,24 @@
-<div class="list">
-	@if (!loading) {
-		@for (country of countries; track $index) {
-			<app-country-card [card]="country"></app-country-card>
-		} @empty {
-			<p>Countries not found!</p>
+<div class="wrapper">
+	<div class="form">
+		<app-search-text-field placeholder="Search for a country..." />
+
+		<app-dropdown-button
+			placeholder="Filter by region"
+			[options]="regions"
+			[formatOption]="onFormatRegion"
+			(changeOption)="onChangeRegion($event)"
+		/>
+	</div>
+
+	<div class="list">
+		@if (!loading) {
+			@for (country of countries; track $index) {
+				<app-country-card [card]="country" />
+			} @empty {
+				<p>Countries not found!</p>
+			}
+		} @else {
+			<p>Loading...</p>
 		}
-	} @else {
-		<p>Loading...</p>
-	}
+	</div>
 </div>

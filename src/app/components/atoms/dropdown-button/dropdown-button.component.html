@@ -1,0 +1,26 @@
+<div class="wrapper {{ theme }}">
+	<div
+		class="selected"
+		tabindex="1"
+		(click)="toggleDropdown()"
+		(keydown.enter)="toggleDropdown()"
+	>
+		<span>{{ selectedOptionText }}</span>
+		<mat-icon>{{ isActive ? "expand_less" : "expand_more" }}</mat-icon>
+	</div>
+
+	@if (isActive) {
+		<ul class="options">
+			@for (option of options; track $index) {
+				<li
+					class="option"
+					[tabindex]="$index + 1"
+					(click)="selectOption(option)"
+					(keydown.enter)="selectOption(option)"
+				>
+					{{ formatOption(option) }}
+				</li>
+			}
+		</ul>
+	}
+</div>
