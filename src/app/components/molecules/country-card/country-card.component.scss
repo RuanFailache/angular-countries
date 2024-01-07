@@ -1,0 +1,55 @@
+.card {
+	width: 100%;
+	border-radius: 5px;
+	overflow: hidden;
+
+	&.dark {
+		background-color: #2b3844;
+	}
+
+	&.light {
+		background-color: #ffffff;
+	}
+}
+
+.flag {
+	position: relative;
+	aspect-ratio: 4/3;
+	width: 100%;
+
+	img {
+		object-fit: cover;
+	}
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	padding: 24px;
+}
+
+.title {
+	font-size: 18px;
+	line-height: 26px;
+	font-weight: 800;
+}
+
+.cells {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.cell {
+	font-size: 14px;
+	line-height: 16px;
+
+	strong {
+		font-weight: 600;
+	}
+
+	span {
+		font-weight: 300;
+	}
+}

@@ -1,4 +1,6 @@
-<div class="page" [ngClass]="theme">
+<div class="page">
 	<app-page-header></app-page-header>
-	<router-outlet></router-outlet>
+	<main class="content {{ theme }}">
+		<router-outlet></router-outlet>
+	</main>
 </div>

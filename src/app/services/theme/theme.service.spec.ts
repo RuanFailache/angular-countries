@@ -1,6 +1,7 @@
 import { TestBed } from "@angular/core/testing";
 
-import { Nullable } from "../../utils/type.utils";
+import { Nullable } from "~/utils/type.utils";
+
 import { Theme, ThemeService, ThemeType } from "./theme.service";
 
 describe("ThemeService", () => {

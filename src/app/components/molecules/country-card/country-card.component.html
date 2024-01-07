@@ -1,0 +1,17 @@
+<div class="card {{ theme }}">
+	<div class="flag">
+		<img [ngSrc]="flagSource" [alt]="title" fill="" />
+	</div>
+
+	<div class="content">
+		<strong class="title">{{ title }}</strong>
+		<ul class="cells">
+			@for (cell of data; track $index) {
+				<li class="cell">
+					<strong>{{ cell.label }}: </strong>
+					<span>{{ cell.value }}</span>
+				</li>
+			}
+		</ul>
+	</div>
+</div>

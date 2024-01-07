@@ -1,1 +1,13 @@
-<p>countries-list works!</p>
+<div class="list">
+	@for (i of Array(4); track $index) {
+		<app-country-card
+			title="Brazil"
+			flagSource="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Flag_of_Brazil.svg/1024px-Flag_of_Brazil.svg.png"
+			[data]="[
+				{ label: 'Region', value: 'Americas' },
+				{ label: 'Population', value: '206.135.893' },
+				{ label: 'Capital', value: 'Brasilia' }
+			]"
+		></app-country-card>
+	}
+</div>

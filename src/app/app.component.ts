@@ -3,7 +3,7 @@ import { Component, OnInit } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
 
 import { PageHeaderComponent } from "./components/organisms/page-header/page-header.component";
-import { Theme, ThemeService, ThemeType } from "./services/theme/theme.service";
+import { ThemeService, ThemeType } from "./services/theme/theme.service";
 
 @Component({
 	selector: "app-root",
@@ -13,7 +13,7 @@ import { Theme, ThemeService, ThemeType } from "./services/theme/theme.service";
 	imports: [CommonModule, RouterOutlet, PageHeaderComponent],
 })
 export class AppComponent implements OnInit {
-	protected theme: ThemeType = Theme.LIGHT;
+	theme: ThemeType;
 
 	constructor(private themeService: ThemeService) {}
 

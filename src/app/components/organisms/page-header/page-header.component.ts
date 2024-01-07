@@ -3,7 +3,6 @@ import { Component, OnInit } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
 
 import { Theme, ThemeService, ThemeType } from "~/services/theme/theme.service";
-import { Nullable } from "~/utils/type.utils";
 
 @Component({
 	selector: "app-page-header",
@@ -13,7 +12,7 @@ import { Nullable } from "~/utils/type.utils";
 	styleUrl: "./page-header.component.scss",
 })
 export class PageHeaderComponent implements OnInit {
-	theme: Nullable<ThemeType>;
+	theme: ThemeType;
 
 	constructor(private themeService: ThemeService) {}
 
