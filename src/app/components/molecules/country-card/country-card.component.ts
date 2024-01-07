@@ -1,12 +1,8 @@
 import { NgOptimizedImage } from "@angular/common";
 import { Component, Input, OnInit } from "@angular/core";
 
+import { CountryCardInput } from "~/components/molecules/country-card/country-card.types";
 import { ThemeService, ThemeType } from "~/services/theme/theme.service";
-
-interface DataCell {
-	label: string;
-	value: string;
-}
 
 @Component({
 	selector: "app-country-card",
@@ -16,9 +12,7 @@ interface DataCell {
 	styleUrl: "./country-card.component.scss",
 })
 export class CountryCardComponent implements OnInit {
-	@Input({ required: true }) title: string;
-	@Input({ required: true }) flagSource: string;
-	@Input({ required: true }) data: DataCell[];
+	@Input({ required: true }) card: CountryCardInput;
 
 	theme: ThemeType;
 

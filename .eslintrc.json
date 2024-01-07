@@ -19,10 +19,10 @@
 						"newlinesBetween": "always",
 						"groups": [
 							"module",
-							"/^~\//",
+							"/^~//",
 							"parent",
-              "sibling",
-              "index"
+							"sibling",
+							"index"
 						],
 						"alphabetize": {
 							"order": "asc",
