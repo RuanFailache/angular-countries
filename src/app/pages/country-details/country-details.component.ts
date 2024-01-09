@@ -1,4 +1,4 @@
-import { NgOptimizedImage } from "@angular/common";
+import { Location, NgOptimizedImage } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
@@ -31,6 +31,7 @@ export class CountryDetailsComponent implements OnInit {
 	constructor(
 		private countryService: CountryService,
 		private toast: ToastrService,
+		private location: Location,
 		private router: Router,
 		private route: ActivatedRoute,
 	) {}
@@ -52,7 +53,7 @@ export class CountryDetailsComponent implements OnInit {
 			},
 			error: async () => {
 				this.toast.error("Unknown error on load country");
-				await this.goToCountryList();
+				this.goBack();
 			},
 			complete: () => {
 				this.loading = false;
@@ -107,7 +108,7 @@ export class CountryDetailsComponent implements OnInit {
 		await this.router.navigate(["country", country]);
 	}
 
-	async goToCountryList() {
-		await this.router.navigate([""]);
+	goBack() {
+		this.location.back();
 	}
 }
