@@ -6,10 +6,10 @@
 	<div class="content">
 		<strong class="title">{{ card.title }}</strong>
 		<ul class="cells">
-			@for (cell of card.data; track $index) {
+			@for (data of card.data.entries(); track $index) {
 				<li class="cell">
-					<strong>{{ cell.label }}: </strong>
-					<span>{{ cell.value }}</span>
+					<strong>{{ data[0] }}: </strong>
+					<span>{{ data[1] }}</span>
 				</li>
 			}
 		</ul>

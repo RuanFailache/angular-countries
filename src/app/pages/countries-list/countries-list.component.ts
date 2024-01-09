@@ -5,7 +5,7 @@ import { CountryService } from "~/api/country/country.service";
 import { DropdownButtonComponent } from "~/components/atoms/dropdown-button/dropdown-button.component";
 import { SearchTextFieldComponent } from "~/components/atoms/search-text-field/search-text-field.component";
 import { CountryCardComponent } from "~/components/molecules/country-card/country-card.component";
-import { CountryCardInput, DataCell } from "~/components/molecules/country-card/country-card.types";
+import { CountryCardInput } from "~/components/molecules/country-card/country-card.types";
 import { Country } from "~/models/Country";
 
 @Component({
@@ -52,8 +52,8 @@ export class CountriesListComponent implements OnInit {
 			const searchedCountryName = this.searchedCountryName.toLowerCase();
 			const isNameSearched = countryName.includes(searchedCountryName);
 
-			const region = country.data.find((d) => d.label === "Region");
-			const isRegionSelected = !this.selectedRegion || region?.value === this.selectedRegion;
+			const region = country.data.get("Region");
+			const isRegionSelected = !this.selectedRegion || region === this.selectedRegion;
 
 			return isNameSearched && isRegionSelected;
 		});
@@ -81,28 +81,11 @@ export class CountriesListComponent implements OnInit {
 	}
 
 	private mapResponseToCountries(country: Country) {
-		const data: DataCell[] = [];
+		const data = new Map();
 
-		if (country.population) {
-			data.push({
-				label: "Population",
-				value: country.population.toLocaleString(),
-			});
-		}
-
-		if (country.region) {
-			data.push({
-				label: "Region",
-				value: country.region,
-			});
-		}
-
-		if (country.capital) {
-			data.push({
-				label: "Capital",
-				value: country.capital.join(", "),
-			});
-		}
+		if (country.population) data.set("Population", country.population.toLocaleString());
+		if (country.region) data.set("Region", country.region);
+		if (country.capital) data.set("Capital", country.capital.join(", "));
 
 		return {
 			data,
