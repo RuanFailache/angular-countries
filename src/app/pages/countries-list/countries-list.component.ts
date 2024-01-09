@@ -82,9 +82,9 @@ export class CountriesListComponent implements OnInit {
 	private mapResponseToCountries(country: Country) {
 		const data = new Map();
 
+		if (country.capital) data.set("Capital", country.capital.join(", "));
 		if (country.population) data.set("Population", country.population.toLocaleString());
 		if (country.region) data.set("Region", country.region);
-		if (country.capital) data.set("Capital", country.capital.join(", "));
 
 		return {
 			data,
