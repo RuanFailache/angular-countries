@@ -13,11 +13,7 @@
 	<div class="list">
 		@if (!loading) {
 			@for (country of filteredCountries; track $index) {
-				<app-country-card
-					routerLink="country"
-					[card]="mapCountryToCardInput(country)"
-					(click)="onNavigateToCountry(country)"
-				/>
+				<app-country-card [routerLink]="['country/', country.ccn3]" [card]="mapCountryToCardInput(country)" />
 			} @empty {
 				<p>Countries not found!</p>
 			}

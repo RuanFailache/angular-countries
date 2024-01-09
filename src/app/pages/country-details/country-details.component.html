@@ -1,1 +1,49 @@
-<p>country-details works!</p>
+<div class="wrapper">
+	<app-button icon="arrow_back" (click)="goToCountryList()">Back</app-button>
+	@if (loading) {
+		<p>Loading...</p>
+	} @else {
+		<div class="content">
+			<div class="flag">
+				<img [ngSrc]="country.flags.png" [alt]="country.name.common" fill="" priority="" />
+			</div>
+
+			<div>
+				<strong class="title">{{ country.name.common }}</strong>
+
+				<div class="cells">
+					<div>
+						@for (cell of firstGroup; track $index) {
+							<p class="cell">
+								<strong>{{ cell.label }}:</strong>
+								{{ cell.value }}
+							</p>
+						}
+					</div>
+
+					<div>
+						@for (cell of secondGroup; track $index) {
+							<p class="cell">
+								<strong>{{ cell.label }}:</strong>
+								{{ cell.value }}
+							</p>
+						}
+					</div>
+				</div>
+
+				@if (loadingBorders) {
+					<p>Loading border countries</p>
+				} @else if (borders.length > 0) {
+					<div class="border-countries">
+						<strong class="headline">Border Countries:</strong>
+						<ul class="badges">
+							@for (border of borders; track $index) {
+								<app-button (click)="navigateToCountry(border.code)">{{ border.name }}</app-button>
+							}
+						</ul>
+					</div>
+				}
+			</div>
+		</div>
+	}
+</div>

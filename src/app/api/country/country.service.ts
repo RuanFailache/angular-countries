@@ -15,4 +15,12 @@ export class CountryService {
 	getAllCountries(): Observable<Country[]> {
 		return this.httpClient.get<Country[]>(`${this.baseUrl}/all`);
 	}
+
+	getByCode(code: string): Observable<Country[]> {
+		return this.httpClient.get<Country[]>(`${this.baseUrl}/alpha/${code}`);
+	}
+
+	getByCodes(code: string[]): Observable<Country[]> {
+		return this.httpClient.get<Country[]>(`${this.baseUrl}/alpha/?codes=${code.join(",")}`);
+	}
 }

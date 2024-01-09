@@ -6,7 +6,6 @@ import { CountryService } from "~/api/country/country.service";
 import { CountryCardComponent } from "~/components/country-card/country-card.component";
 import { DropdownButtonComponent } from "~/components/dropdown-button/dropdown-button.component";
 import { SearchTextFieldComponent } from "~/components/search-text-field/search-text-field.component";
-import { SessionStorageKey } from "~/constants/session-storage.constants";
 import { Country } from "~/models/Country";
 
 @Component({
@@ -27,7 +26,7 @@ export class CountriesListComponent implements OnInit {
 		private toast: ToastrService,
 	) {}
 
-	private loadCountries() {
+	ngOnInit(): void {
 		this.countryService.getAllCountries().subscribe({
 			next: (countries) => {
 				this.countries = countries;
@@ -39,11 +38,6 @@ export class CountriesListComponent implements OnInit {
 				this.loading = false;
 			},
 		});
-	}
-
-	ngOnInit(): void {
-		sessionStorage.clear();
-		this.loadCountries();
 	}
 
 	get regions(): string[] {
@@ -77,10 +71,6 @@ export class CountriesListComponent implements OnInit {
 
 	onChangeCountryName(name: string) {
 		this.searchedCountryName = name;
-	}
-
-	onNavigateToCountry(country: Country) {
-		sessionStorage.setItem(SessionStorageKey.COUNTRY, JSON.stringify(country));
 	}
 
 	mapCountryToCardInput(country: Country) {
