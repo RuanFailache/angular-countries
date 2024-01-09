@@ -1,5 +1,5 @@
 export interface CountryCardInput {
-	title: string;
+	name: string;
 	flagSource: string;
 	data: Map<string, string>;
 }

@@ -1,11 +1,14 @@
 import { Component, OnInit } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { Router } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
 
 import { CountryService } from "~/api/country/country.service";
 import { DropdownButtonComponent } from "~/components/atoms/dropdown-button/dropdown-button.component";
 import { SearchTextFieldComponent } from "~/components/atoms/search-text-field/search-text-field.component";
 import { CountryCardComponent } from "~/components/molecules/country-card/country-card.component";
 import { CountryCardInput } from "~/components/molecules/country-card/country-card.types";
+import { SessionStorageKey } from "~/constants/session-storage.constants";
 import { Country } from "~/models/Country";
 
 @Component({
@@ -23,20 +26,20 @@ export class CountriesListComponent implements OnInit {
 
 	constructor(
 		private countryService: CountryService,
-		private snackBar: MatSnackBar,
+		private toast: ToastrService,
+		private router: Router,
 	) {}
 
 	ngOnInit(): void {
+		sessionStorage.clear();
+
 		this.countryService.getAllCountries().subscribe({
 			next: (countries) => {
 				this.countries = countries;
+				this.toast.error("Countries search failed!");
 			},
 			error: () => {
-				this.snackBar.open("Countries search failed!", "", {
-					horizontalPosition: "end",
-					verticalPosition: "top",
-					duration: 3000,
-				});
+				this.toast.error("Countries search failed!");
 			},
 			complete: () => {
 				this.loading = false;
@@ -53,8 +56,8 @@ export class CountriesListComponent implements OnInit {
 		}, []);
 	}
 
-	get filteredCountries(): CountryCardInput[] {
-		const filteredCountries = this.countries.filter((country) => {
+	get filteredCountries(): Country[] {
+		return this.countries.filter((country) => {
 			const countryName = country.name.common.toLowerCase();
 			const searchedCountryName = this.searchedCountryName.toLowerCase();
 
@@ -63,8 +66,6 @@ export class CountriesListComponent implements OnInit {
 
 			return isNameSearched && isRegionSelected;
 		});
-
-		return filteredCountries.map(this.mapResponseToCountries);
 	}
 
 	onFormatRegion(region: string) {
@@ -79,7 +80,15 @@ export class CountriesListComponent implements OnInit {
 		this.searchedCountryName = name;
 	}
 
-	private mapResponseToCountries(country: Country) {
+	onNavigateToCountry(country: Country) {
+		const countryName = country.name.common;
+		this.router.navigate(["country"]).then((withSuccess) => {
+			if (withSuccess) sessionStorage.setItem(SessionStorageKey.COUNTRY, JSON.stringify(country));
+			else this.toast.error(`Navigation to ${countryName}'s details failed!`);
+		});
+	}
+
+	mapCountryToCardInput(country: Country) {
 		const data = new Map();
 
 		if (country.capital) data.set("Capital", country.capital.join(", "));
@@ -89,7 +98,7 @@ export class CountriesListComponent implements OnInit {
 		return {
 			data,
 			flagSource: country.flags.svg,
-			title: country.name.common,
+			name: country.name.common,
 		};
 	}
 }

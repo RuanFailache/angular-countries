@@ -6,5 +6,6 @@ import { CountriesListComponent } from "./pages/countries-list/countries-list.co
 
 export const routes: Routes = [
 	{ path: "", component: CountriesListComponent },
-	{ path: ":country", component: CountryDetailsComponent },
+	{ path: "country", component: CountryDetailsComponent },
+	{ path: "**", redirectTo: "" },
 ];
