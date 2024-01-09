@@ -1,7 +1,7 @@
 import { NgOptimizedImage } from "@angular/common";
 import { Component, Input, OnInit } from "@angular/core";
 
-import { CountryCardInput } from "~/components/molecules/country-card/country-card.types";
+import { CountryCardInput } from "~/components/country-card/country-card.types";
 import { ThemeService, ThemeType } from "~/services/theme/theme.service";
 
 @Component({

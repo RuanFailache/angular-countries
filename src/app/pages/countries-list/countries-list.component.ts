@@ -4,10 +4,10 @@ import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 
 import { CountryService } from "~/api/country/country.service";
-import { DropdownButtonComponent } from "~/components/atoms/dropdown-button/dropdown-button.component";
-import { SearchTextFieldComponent } from "~/components/atoms/search-text-field/search-text-field.component";
-import { CountryCardComponent } from "~/components/molecules/country-card/country-card.component";
-import { CountryCardInput } from "~/components/molecules/country-card/country-card.types";
+import { CountryCardComponent } from "~/components/country-card/country-card.component";
+import { CountryCardInput } from "~/components/country-card/country-card.types";
+import { DropdownButtonComponent } from "~/components/dropdown-button/dropdown-button.component";
+import { SearchTextFieldComponent } from "~/components/search-text-field/search-text-field.component";
 import { SessionStorageKey } from "~/constants/session-storage.constants";
 import { Country } from "~/models/Country";
 

@@ -2,7 +2,8 @@ import { CommonModule } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
 
-import { PageHeaderComponent } from "./components/organisms/page-header/page-header.component";
+import { PageHeaderComponent } from "~/components/page-header/page-header.component";
+
 import { ThemeService, ThemeType } from "./services/theme/theme.service";
 
 @Component({
