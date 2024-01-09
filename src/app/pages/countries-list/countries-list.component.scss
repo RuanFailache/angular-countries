@@ -1,5 +1,8 @@
 .wrapper {
+	padding: 24px 16px;
+
 	@media (min-width: 1280px) {
+		padding: 48px 0;
 		width: 1280px;
 		margin: 0 auto;
 	}

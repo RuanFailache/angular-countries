@@ -7,9 +7,7 @@
 
 .content {
 	flex: 1;
-
 	width: 100%;
-	padding: 16px 24px;
 	overflow-y: auto;
 
 	transition:
@@ -24,9 +22,5 @@
 	&.light {
 		background-color: #fafafa;
 		color: #111517;
-	}
-
-	@media (min-width: 768px) {
-		padding: 48px 80px;
 	}
 }

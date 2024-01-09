@@ -17,8 +17,7 @@ import { Country } from "~/models/Country";
 })
 export class CountriesListComponent implements OnInit {
 	loading = true;
-	countries: CountryCardInput[] = [];
-	regions: string[] = [];
+	countries: Country[] = [];
 	selectedRegion: string = "";
 	searchedCountryName: string = "";
 
@@ -30,8 +29,7 @@ export class CountriesListComponent implements OnInit {
 	ngOnInit(): void {
 		this.countryService.getAllCountries().subscribe({
 			next: (countries) => {
-				this.countries = countries.map(this.mapResponseToCountries);
-				this.reduceResponseToRegions(countries);
+				this.countries = countries;
 			},
 			error: () => {
 				this.snackBar.open("Countries search failed!", "", {
@@ -46,17 +44,27 @@ export class CountriesListComponent implements OnInit {
 		});
 	}
 
-	get filteredCountries(): CountryCardInput[] {
-		return this.countries.filter((country) => {
-			const countryName = country.title.toLowerCase();
-			const searchedCountryName = this.searchedCountryName.toLowerCase();
-			const isNameSearched = countryName.includes(searchedCountryName);
+	get regions(): string[] {
+		return this.countries.reduce<string[]>((regions, country) => {
+			if (!regions.includes(country.region)) {
+				regions.push(country.region);
+			}
+			return regions;
+		}, []);
+	}
 
-			const region = country.data.get("Region");
-			const isRegionSelected = !this.selectedRegion || region === this.selectedRegion;
+	get filteredCountries(): CountryCardInput[] {
+		const filteredCountries = this.countries.filter((country) => {
+			const countryName = country.name.common.toLowerCase();
+			const searchedCountryName = this.searchedCountryName.toLowerCase();
+
+			const isNameSearched = countryName.includes(searchedCountryName);
+			const isRegionSelected = !this.selectedRegion || country.region === this.selectedRegion;
 
 			return isNameSearched && isRegionSelected;
 		});
+
+		return filteredCountries.map(this.mapResponseToCountries);
 	}
 
 	onFormatRegion(region: string) {
@@ -69,15 +77,6 @@ export class CountriesListComponent implements OnInit {
 
 	onChangeCountryName(name: string) {
 		this.searchedCountryName = name;
-	}
-
-	private reduceResponseToRegions(countries: Country[]) {
-		this.regions = countries.reduce<string[]>((regions, country) => {
-			if (!regions.includes(country.region)) {
-				regions.push(country.region);
-			}
-			return regions;
-		}, []);
 	}
 
 	private mapResponseToCountries(country: Country) {
