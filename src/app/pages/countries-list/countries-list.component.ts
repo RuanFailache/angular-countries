@@ -1,11 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { Router } from "@angular/router";
+import { RouterLink } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 
 import { CountryService } from "~/api/country/country.service";
 import { CountryCardComponent } from "~/components/country-card/country-card.component";
-import { CountryCardInput } from "~/components/country-card/country-card.types";
 import { DropdownButtonComponent } from "~/components/dropdown-button/dropdown-button.component";
 import { SearchTextFieldComponent } from "~/components/search-text-field/search-text-field.component";
 import { SessionStorageKey } from "~/constants/session-storage.constants";
@@ -16,7 +14,7 @@ import { Country } from "~/models/Country";
 	styleUrl: "./countries-list.component.scss",
 	templateUrl: "./countries-list.component.html",
 	standalone: true,
-	imports: [CountryCardComponent, SearchTextFieldComponent, DropdownButtonComponent],
+	imports: [CountryCardComponent, SearchTextFieldComponent, DropdownButtonComponent, RouterLink],
 })
 export class CountriesListComponent implements OnInit {
 	loading = true;
@@ -27,16 +25,12 @@ export class CountriesListComponent implements OnInit {
 	constructor(
 		private countryService: CountryService,
 		private toast: ToastrService,
-		private router: Router,
 	) {}
 
-	ngOnInit(): void {
-		sessionStorage.clear();
-
+	private loadCountries() {
 		this.countryService.getAllCountries().subscribe({
 			next: (countries) => {
 				this.countries = countries;
-				this.toast.error("Countries search failed!");
 			},
 			error: () => {
 				this.toast.error("Countries search failed!");
@@ -45,6 +39,11 @@ export class CountriesListComponent implements OnInit {
 				this.loading = false;
 			},
 		});
+	}
+
+	ngOnInit(): void {
+		sessionStorage.clear();
+		this.loadCountries();
 	}
 
 	get regions(): string[] {
@@ -81,11 +80,7 @@ export class CountriesListComponent implements OnInit {
 	}
 
 	onNavigateToCountry(country: Country) {
-		const countryName = country.name.common;
-		this.router.navigate(["country"]).then((withSuccess) => {
-			if (withSuccess) sessionStorage.setItem(SessionStorageKey.COUNTRY, JSON.stringify(country));
-			else this.toast.error(`Navigation to ${countryName}'s details failed!`);
-		});
+		sessionStorage.setItem(SessionStorageKey.COUNTRY, JSON.stringify(country));
 	}
 
 	mapCountryToCardInput(country: Country) {
