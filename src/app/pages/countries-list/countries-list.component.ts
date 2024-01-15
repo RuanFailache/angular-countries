@@ -8,6 +8,7 @@ import { DropdownButtonComponent } from "~/components/dropdown-button/dropdown-b
 import { LoadingComponent } from "~/components/loading/loading.component";
 import { SearchTextFieldComponent } from "~/components/search-text-field/search-text-field.component";
 import { Country } from "~/models/Country";
+import { MapUtils } from "~/utils/map.utils";
 
 const ALL_REGIONS = "All regions";
 
@@ -16,7 +17,7 @@ const ALL_REGIONS = "All regions";
 	styleUrl: "./countries-list.component.scss",
 	templateUrl: "./countries-list.component.html",
 	standalone: true,
-	providers: [CountryService],
+	providers: [CountryService, MapUtils],
 	imports: [CountryCardComponent, SearchTextFieldComponent, DropdownButtonComponent, RouterLink, LoadingComponent],
 })
 export class CountriesListComponent implements OnInit {
@@ -28,6 +29,7 @@ export class CountriesListComponent implements OnInit {
 	constructor(
 		private countryService: CountryService,
 		private toast: ToastrService,
+		private mapUtils: MapUtils,
 	) {}
 
 	ngOnInit(): void {
@@ -84,11 +86,9 @@ export class CountriesListComponent implements OnInit {
 
 	mapCountryToCardInput(country: Country) {
 		const data = new Map();
-
-		if (country.capital) data.set("Capital", country.capital.join(", "));
-		if (country.population) data.set("Population", country.population.toLocaleString());
-		if (country.region) data.set("Region", country.region);
-
+		this.mapUtils.setIfExists(data, "Capital", country.capital.join(", "));
+		this.mapUtils.setIfExists(data, "Population", country.population.toLocaleString());
+		this.mapUtils.setIfExists(data, "Region", country.region);
 		return {
 			data,
 			flagSource: country.flags.svg,

@@ -9,6 +9,8 @@ import { ButtonComponent } from "~/components/button/button.component";
 import { LoadingComponent } from "~/components/loading/loading.component";
 import { Country } from "~/models/Country";
 import { CountryBorderData } from "~/pages/country-details/country-details.types";
+import { MapUtils } from "~/utils/map.utils";
+import { ObjectUtils } from "~/utils/object.utils";
 
 interface Cell {
 	label: string;
@@ -20,12 +22,11 @@ interface Cell {
 	styleUrl: "./country-details.component.scss",
 	templateUrl: "./country-details.component.html",
 	standalone: true,
-	providers: [CountryService],
+	providers: [CountryService, ObjectUtils, MapUtils],
 	imports: [MatIconModule, ButtonComponent, NgOptimizedImage, RouterLink, LoadingComponent],
 })
 export class CountryDetailsComponent implements OnInit {
-	loadingCountry = true;
-	loadingBorders = true;
+	loading = true;
 
 	country: Country;
 	borders: CountryBorderData[] = [];
@@ -36,6 +37,8 @@ export class CountryDetailsComponent implements OnInit {
 		private location: Location,
 		private router: Router,
 		private route: ActivatedRoute,
+		private objectUtils: ObjectUtils,
+		private mapUtils: MapUtils,
 	) {}
 
 	private formatMapToCell(map: Map<string, string>): Cell[] {
@@ -51,14 +54,13 @@ export class CountryDetailsComponent implements OnInit {
 			next: ([country]) => {
 				this.country = country;
 				if (country.borders) this.loadBordersCountry(country.borders);
-				else this.loadingBorders = false;
 			},
 			error: async () => {
 				this.toast.error("Unknown error on load country");
 				this.goBack();
 			},
 			complete: () => {
-				this.loadingCountry = false;
+				this.loading = false;
 			},
 		});
 	}
@@ -74,33 +76,26 @@ export class CountryDetailsComponent implements OnInit {
 			error: () => {
 				this.toast.error("Unknown error on load country borders");
 			},
-			complete: () => {
-				this.loadingBorders = false;
-			},
 		});
 	}
 
 	get firstGroup(): Cell[] {
 		const data = new Map();
-		data.set("Native name", this.country.name.official);
-		data.set("Population", this.country.population.toLocaleString());
-		data.set("Region", this.country.region);
-		data.set("Sub Region", this.country.subregion);
-		data.set("Capital", this.country.capital.join(", "));
+		this.mapUtils.setIfExists(data, "Native name", this.country.name.official);
+		this.mapUtils.setIfExists(data, "Population", this.country.population.toLocaleString());
+		this.mapUtils.setIfExists(data, "Region", this.country.region);
+		this.mapUtils.setIfExists(data, "Sub Region", this.country.subregion);
+		this.mapUtils.setIfExists(data, "Capital", this.country.capital.join(", "));
 		return this.formatMapToCell(data);
 	}
 
 	get secondGroup(): Cell[] {
 		const data = new Map();
-		data.set("Top Level Domain", this.country.tld.join(", "));
-		const currencies = Object.values(this.country.currencies).map((c) => c.name);
-		data.set("Currencies", currencies.join(", "));
-		data.set("Languages", Object.values(this.country.languages).join(", "));
+		const currencies = this.objectUtils.formatValues(this.country.currencies, (currency) => currency.name);
+		this.mapUtils.setIfExists(data, "Top Level Domain", this.country.tld.join(", "));
+		this.mapUtils.setIfExists(data, "Currencies", currencies);
+		this.mapUtils.setIfExists(data, "Languages", this.objectUtils.formatValues(this.country.languages));
 		return this.formatMapToCell(data);
-	}
-
-	get loading(): boolean {
-		return this.loadingBorders || this.loadingBorders;
 	}
 
 	async ngOnInit(): Promise<void> {
