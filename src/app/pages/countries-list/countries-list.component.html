@@ -1,6 +1,6 @@
 <div class="wrapper">
 	<div class="form">
-		<app-search-text-field placeholder="Search for a country..." (search)="onChangeCountryName($event)" />
+		<app-search-text-field placeholder="Search for a country..." (search)="onSearchCountryByName($event)" />
 
 		<app-dropdown-button
 			placeholder="Filter by region"
@@ -10,15 +10,20 @@
 		/>
 	</div>
 
-	<div class="list">
-		@if (!loading) {
-			@for (country of filteredCountries; track $index) {
-				<app-country-card [routerLink]="['country/', country.ccn3]" [card]="mapCountryToCardInput(country)" />
-			} @empty {
-				<p>Countries not found!</p>
-			}
+	<div class="content">
+		@if (loading) {
+			<app-loading />
 		} @else {
-			<p>Loading...</p>
+			<div class="list">
+				@for (country of filteredCountries; track $index) {
+					<app-country-card
+						[routerLink]="['country/', country.ccn3]"
+						[card]="mapCountryToCardInput(country)"
+					/>
+				} @empty {
+					<p>Countries not found!</p>
+				}
+			</div>
 		}
 	</div>
 </div>

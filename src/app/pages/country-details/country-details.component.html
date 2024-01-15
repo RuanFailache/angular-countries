@@ -1,9 +1,10 @@
 <div class="wrapper">
 	<app-button icon="arrow_back" (click)="goBack()">Back</app-button>
-	@if (loading) {
-		<p>Loading...</p>
-	} @else {
-		<div class="content">
+
+	<div class="content {{ loading ? 'loading' : '' }}">
+		@if (loading) {
+			<app-loading />
+		} @else {
 			<div class="flag">
 				<img [ngSrc]="country.flags.png" [alt]="country.name.common" fill="" priority="" />
 			</div>
@@ -31,9 +32,7 @@
 					</div>
 				</div>
 
-				@if (loadingBorders) {
-					<p>Loading border countries</p>
-				} @else if (borders.length > 0) {
+				@if (borders.length > 0) {
 					<div class="border-countries">
 						<strong class="headline">Border Countries:</strong>
 						<ul class="badges">
@@ -44,6 +43,6 @@
 					</div>
 				}
 			</div>
-		</div>
-	}
+		}
+	</div>
 </div>

@@ -1,11 +1,18 @@
 .wrapper {
+	display: flex;
+	flex-direction: column;
 	padding: 24px 16px;
+	height: 100%;
 
 	@media (min-width: 1280px) {
 		padding: 48px 0;
 		width: 1280px;
 		margin: 0 auto;
 	}
+}
+
+.content {
+	flex: 1;
 }
 
 .form {

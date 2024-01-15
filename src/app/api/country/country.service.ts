@@ -4,9 +4,7 @@ import { Observable } from "rxjs";
 
 import { Country } from "~/models/Country";
 
-@Injectable({
-	providedIn: "root",
-})
+@Injectable()
 export class CountryService {
 	private baseUrl = "https://restcountries.com/v3.1/";
 

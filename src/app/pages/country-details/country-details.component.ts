@@ -6,6 +6,7 @@ import { ToastrService } from "ngx-toastr";
 
 import { CountryService } from "~/api/country/country.service";
 import { ButtonComponent } from "~/components/button/button.component";
+import { LoadingComponent } from "~/components/loading/loading.component";
 import { Country } from "~/models/Country";
 import { CountryBorderData } from "~/pages/country-details/country-details.types";
 
@@ -16,13 +17,14 @@ interface Cell {
 
 @Component({
 	selector: "app-country-details",
-	standalone: true,
-	imports: [MatIconModule, ButtonComponent, NgOptimizedImage, RouterLink],
-	templateUrl: "./country-details.component.html",
 	styleUrl: "./country-details.component.scss",
+	templateUrl: "./country-details.component.html",
+	standalone: true,
+	providers: [CountryService],
+	imports: [MatIconModule, ButtonComponent, NgOptimizedImage, RouterLink, LoadingComponent],
 })
 export class CountryDetailsComponent implements OnInit {
-	loading = true;
+	loadingCountry = true;
 	loadingBorders = true;
 
 	country: Country;
@@ -56,7 +58,7 @@ export class CountryDetailsComponent implements OnInit {
 				this.goBack();
 			},
 			complete: () => {
-				this.loading = false;
+				this.loadingCountry = false;
 			},
 		});
 	}
@@ -95,6 +97,10 @@ export class CountryDetailsComponent implements OnInit {
 		data.set("Currencies", currencies.join(", "));
 		data.set("Languages", Object.values(this.country.languages).join(", "));
 		return this.formatMapToCell(data);
+	}
+
+	get loading(): boolean {
+		return this.loadingBorders || this.loadingBorders;
 	}
 
 	async ngOnInit(): Promise<void> {

@@ -5,6 +5,7 @@ import { ToastrService } from "ngx-toastr";
 import { CountryService } from "~/api/country/country.service";
 import { CountryCardComponent } from "~/components/country-card/country-card.component";
 import { DropdownButtonComponent } from "~/components/dropdown-button/dropdown-button.component";
+import { LoadingComponent } from "~/components/loading/loading.component";
 import { SearchTextFieldComponent } from "~/components/search-text-field/search-text-field.component";
 import { Country } from "~/models/Country";
 
@@ -13,7 +14,8 @@ import { Country } from "~/models/Country";
 	styleUrl: "./countries-list.component.scss",
 	templateUrl: "./countries-list.component.html",
 	standalone: true,
-	imports: [CountryCardComponent, SearchTextFieldComponent, DropdownButtonComponent, RouterLink],
+	providers: [CountryService],
+	imports: [CountryCardComponent, SearchTextFieldComponent, DropdownButtonComponent, RouterLink, LoadingComponent],
 })
 export class CountriesListComponent implements OnInit {
 	loading = true;
@@ -69,7 +71,7 @@ export class CountriesListComponent implements OnInit {
 		this.selectedRegion = region;
 	}
 
-	onChangeCountryName(name: string) {
+	onSearchCountryByName(name: string) {
 		this.searchedCountryName = name;
 	}
 

@@ -1,4 +1,7 @@
 .wrapper {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
 	padding: 40px 16px;
 
 	@media (min-width: 1280px) {
@@ -6,6 +9,11 @@
 		width: 1280px;
 		margin: 0 auto;
 	}
+}
+
+.loading {
+	flex: 1;
+	align-self: center;
 }
 
 .content {
