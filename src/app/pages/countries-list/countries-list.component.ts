@@ -9,6 +9,8 @@ import { LoadingComponent } from "~/components/loading/loading.component";
 import { SearchTextFieldComponent } from "~/components/search-text-field/search-text-field.component";
 import { Country } from "~/models/Country";
 
+const ALL_REGIONS = "All regions";
+
 @Component({
 	selector: "app-countries-list",
 	styleUrl: "./countries-list.component.scss",
@@ -43,12 +45,15 @@ export class CountriesListComponent implements OnInit {
 	}
 
 	get regions(): string[] {
-		return this.countries.reduce<string[]>((regions, country) => {
-			if (!regions.includes(country.region)) {
-				regions.push(country.region);
-			}
-			return regions;
-		}, []);
+		return this.countries.reduce<string[]>(
+			(regions, country) => {
+				if (!regions.includes(country.region)) {
+					regions.push(country.region);
+				}
+				return regions;
+			},
+			[ALL_REGIONS],
+		);
 	}
 
 	get filteredCountries(): Country[] {
@@ -57,9 +62,11 @@ export class CountriesListComponent implements OnInit {
 			const searchedCountryName = this.searchedCountryName.toLowerCase();
 
 			const isNameSearched = countryName.includes(searchedCountryName);
-			const isRegionSelected = !this.selectedRegion || country.region === this.selectedRegion;
+			const hasRegionSelected = Boolean(this.selectedRegion);
+			const isAllRegionsSelected = this.selectedRegion === ALL_REGIONS;
+			const isRegionSelected = country.region === this.selectedRegion;
 
-			return isNameSearched && isRegionSelected;
+			return isNameSearched && (!hasRegionSelected || isAllRegionsSelected || isRegionSelected);
 		});
 	}
 
