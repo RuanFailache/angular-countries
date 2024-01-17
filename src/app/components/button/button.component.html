@@ -1,6 +1,6 @@
-<button class="button {{ theme }}">
+<button class="button {{ theme }} {{ color }}">
 	@if (icon) {
-		<mat-icon class="icon">arrow_back</mat-icon>
+		<mat-icon class="icon">{{ icon }}</mat-icon>
 	}
 	<ng-content />
 </button>

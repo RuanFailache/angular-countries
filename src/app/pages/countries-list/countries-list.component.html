@@ -17,7 +17,7 @@
 			<div class="list">
 				@for (country of filteredCountries; track $index) {
 					<app-country-card
-						[routerLink]="['country/', country.ccn3]"
+						[routerLink]="['country', country.ccn3]"
 						[card]="mapCountryToCardInput(country)"
 					/>
 				} @empty {

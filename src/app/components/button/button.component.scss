@@ -14,11 +14,21 @@
 		font-size: 16px;
 	}
 
-	&.light {
+	&.light.primary {
+		color: #ffffff;
+		background-color: #4cae4c;
+	}
+
+	&.light.surface {
 		background-color: #ffffff;
 	}
 
-	&.dark {
+	&.dark.primary {
+		color: #ffffff;
+		background-color: #5cb85c;
+	}
+
+	&.dark.surface {
 		background-color: #2b3844;
 	}
 

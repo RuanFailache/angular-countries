@@ -2,6 +2,14 @@ import { Component, Input, OnInit } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
 
 import { ThemeService, ThemeType } from "~/services/theme/theme.service";
+import { ValueOf } from "~/utils/type.utils";
+
+export const ButtonColor = {
+	PRIMARY: "primary",
+	SURFACE: "surface",
+} as const;
+
+export type ButtonColorType = ValueOf<typeof ButtonColor>;
 
 @Component({
 	selector: "app-button",
@@ -12,6 +20,7 @@ import { ThemeService, ThemeType } from "~/services/theme/theme.service";
 })
 export class ButtonComponent implements OnInit {
 	@Input() icon: string;
+	@Input() color: ButtonColorType = ButtonColor.SURFACE;
 
 	theme: ThemeType;
 
