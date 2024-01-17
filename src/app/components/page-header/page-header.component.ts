@@ -1,9 +1,9 @@
 import { NgClass } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
+import { RouterLink } from "@angular/router";
 
 import { Theme, ThemeService, ThemeType } from "~/services/theme/theme.service";
-import { RouterLink } from "@angular/router";
 
 @Component({
 	selector: "app-page-header",
