@@ -81,20 +81,26 @@ export class CountryDetailsComponent implements OnInit {
 
 	get firstGroup(): Cell[] {
 		const data = new Map();
-		this.mapUtils.setIfExists(data, "Native name", this.country.name.official);
-		this.mapUtils.setIfExists(data, "Population", this.country.population?.toLocaleString());
-		this.mapUtils.setIfExists(data, "Region", this.country.region);
-		this.mapUtils.setIfExists(data, "Sub Region", this.country.subregion);
-		this.mapUtils.setIfExists(data, "Capital", this.country.capital?.join(", "));
+		this.mapUtils.setIfExists(data, "Native name", this.country.name.official, "-");
+		this.mapUtils.setIfExists(data, "Population", this.country.population?.toLocaleString(), "-");
+		this.mapUtils.setIfExists(data, "Region", this.country.region, "-");
+		this.mapUtils.setIfExists(data, "Sub Region", this.country.subregion, "-");
+		this.mapUtils.setIfExists(data, "Capital", this.country.capital?.join(", "), "-");
 		return this.formatMapToCell(data);
 	}
 
 	get secondGroup(): Cell[] {
 		const data = new Map();
-		this.mapUtils.setIfExists(data, "Top Level Domain", this.country.tld?.join(", "));
+
+		const tld = this.country.tld?.join(", ");
+		this.mapUtils.setIfExists(data, "Top Level Domain", tld, "-");
+
 		const currencies = this.objectUtils.formatValues(this.country.currencies, (currency) => currency.name);
-		this.mapUtils.setIfExists(data, "Currencies", currencies);
-		this.mapUtils.setIfExists(data, "Languages", this.objectUtils.formatValues(this.country.languages));
+		this.mapUtils.setIfExists(data, "Currencies", currencies, "-");
+
+		const languages = this.objectUtils.formatValues(this.country.languages);
+		this.mapUtils.setIfExists(data, "Languages", languages, "-");
+
 		return this.formatMapToCell(data);
 	}
 

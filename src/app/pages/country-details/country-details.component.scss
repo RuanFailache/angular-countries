@@ -21,12 +21,14 @@
 	flex-direction: column;
 	gap: 48px;
 	margin-top: 64px;
+	padding-bottom: 40px;
 
 	@media (min-width: 768px) {
 		flex-direction: row;
 		align-items: center;
 		gap: 64px;
 		margin-top: 80px;
+		padding-bottom: 80px;
 	}
 
 	@media (min-width: 1280px) {

@@ -86,9 +86,9 @@ export class CountriesListComponent implements OnInit {
 
 	mapCountryToCardInput(country: Country) {
 		const data = new Map();
-		this.mapUtils.setIfExists(data, "Capital", country.capital?.join(", "));
-		this.mapUtils.setIfExists(data, "Population", country.population?.toLocaleString());
-		this.mapUtils.setIfExists(data, "Region", country.region);
+		this.mapUtils.setIfExists(data, "Capital", country.capital?.join(", "), "-");
+		this.mapUtils.setIfExists(data, "Population", country.population?.toLocaleString(), "-");
+		this.mapUtils.setIfExists(data, "Region", country.region, "-");
 		return {
 			data,
 			flagSource: country.flags.svg,
