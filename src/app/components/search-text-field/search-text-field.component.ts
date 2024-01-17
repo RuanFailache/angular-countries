@@ -12,6 +12,7 @@ import { ThemeService, ThemeType } from "~/services/theme/theme.service";
 })
 export class SearchTextFieldComponent implements OnInit {
 	@Input() placeholder: string = "";
+	@Input({ required: true }) value: string = "";
 
 	@Output() search = new EventEmitter<string>();
 

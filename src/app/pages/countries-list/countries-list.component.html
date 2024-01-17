@@ -1,10 +1,15 @@
 <div class="wrapper">
 	<div class="form">
-		<app-search-text-field placeholder="Search for a country..." (search)="onSearchCountryByName($event)" />
+		<app-search-text-field
+			placeholder="Search for a country..."
+			[value]="searchedCountryName"
+			(search)="onSearchCountryByName($event)"
+		/>
 
 		<app-dropdown-button
 			placeholder="Filter by region"
 			[options]="regions"
+			[value]="selectedRegion"
 			[formatOption]="onFormatRegion"
 			(changeOption)="onChangeRegion($event)"
 		/>
@@ -13,16 +18,20 @@
 	<div class="content">
 		@if (loading) {
 			<app-loading />
-		} @else {
+		} @else if (filteredCountries.length > 0) {
 			<div class="list">
 				@for (country of filteredCountries; track $index) {
 					<app-country-card
 						[routerLink]="['country', country.ccn3]"
 						[card]="mapCountryToCardInput(country)"
 					/>
-				} @empty {
-					<p>Countries not found!</p>
 				}
+			</div>
+		} @else {
+			<div class="empty-search">
+				<mat-icon>flag</mat-icon>
+				<p>Countries not found!</p>
+				<app-button [color]="ButtonColor.PRIMARY" (click)="clearFilter()">CLEAR FILTER</app-button>
 			</div>
 		}
 	</div>

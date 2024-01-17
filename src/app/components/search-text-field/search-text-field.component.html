@@ -1,4 +1,4 @@
 <label class="wrapper {{ theme }}">
 	<mat-icon>search</mat-icon>
-	<input type="text" [placeholder]="placeholder" (input)="onSearch($event.target)" />
+	<input type="text" [placeholder]="placeholder" [value]="value" (input)="onSearch($event.target)" />
 </label>

@@ -12,13 +12,13 @@ import { ThemeService, ThemeType } from "~/services/theme/theme.service";
 })
 export class DropdownButtonComponent<T> implements OnInit {
 	@Input() placeholder: string = "";
+	@Input({ required: true }) value: T;
 	@Input({ required: true }) options: T[];
 	@Input({ required: true }) formatOption: (option: T) => string;
 
 	@Output() changeOption = new EventEmitter<T>();
 
 	theme: ThemeType;
-	selectedOption: T;
 	isActive = false;
 
 	constructor(private themeService: ThemeService) {}
@@ -29,8 +29,8 @@ export class DropdownButtonComponent<T> implements OnInit {
 		});
 	}
 
-	get selectedOptionText(): string {
-		return this.selectedOption ? this.formatOption(this.selectedOption) : this.placeholder;
+	get selectedOption(): string {
+		return this.value ? this.formatOption(this.value) : this.placeholder;
 	}
 
 	toggleDropdown() {
@@ -38,7 +38,6 @@ export class DropdownButtonComponent<T> implements OnInit {
 	}
 
 	selectOption(option: T) {
-		this.selectedOption = option;
 		this.changeOption.emit(option);
 		this.toggleDropdown();
 	}

@@ -1,8 +1,10 @@
 import { Component, OnInit } from "@angular/core";
+import { MatIconModule } from "@angular/material/icon";
 import { RouterLink } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 
 import { CountryService } from "~/api/country/country.service";
+import { ButtonColor, ButtonComponent } from "~/components/button/button.component";
 import { CountryCardComponent } from "~/components/country-card/country-card.component";
 import { DropdownButtonComponent } from "~/components/dropdown-button/dropdown-button.component";
 import { LoadingComponent } from "~/components/loading/loading.component";
@@ -18,9 +20,19 @@ const ALL_REGIONS = "All regions";
 	templateUrl: "./countries-list.component.html",
 	standalone: true,
 	providers: [CountryService, MapUtils],
-	imports: [CountryCardComponent, SearchTextFieldComponent, DropdownButtonComponent, RouterLink, LoadingComponent],
+	imports: [
+		CountryCardComponent,
+		SearchTextFieldComponent,
+		DropdownButtonComponent,
+		RouterLink,
+		LoadingComponent,
+		MatIconModule,
+		ButtonComponent,
+	],
 })
 export class CountriesListComponent implements OnInit {
+	protected readonly ButtonColor = ButtonColor;
+
 	loading = true;
 	countries: Country[] = [];
 	selectedRegion: string = "";
@@ -94,5 +106,10 @@ export class CountriesListComponent implements OnInit {
 			flagSource: country.flags.svg,
 			name: country.name.common,
 		};
+	}
+
+	clearFilter() {
+		this.onChangeRegion("");
+		this.onSearchCountryByName("");
 	}
 }
